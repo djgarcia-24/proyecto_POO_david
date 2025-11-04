@@ -19,7 +19,7 @@ public class Vendedor extends Usuario{
     
     
     @Override
-    public void menu(ArrayList<  ArrayList<Producto > >  colecciones_de_productos){
+    public void menu( ArrayList<Producto >  productos){
         System.out.println("Bienvenido "+nombre+":) !");
         int opcion;
         

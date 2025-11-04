@@ -3,6 +3,7 @@ package proyecto_david_octubre;
 
 import java.util.ArrayList;
 
+
 public class EncargadoAlmacen extends Usuario{
     @Override
     public void mostrar_datos(){
@@ -16,30 +17,35 @@ public class EncargadoAlmacen extends Usuario{
         super.mostrar_datos();
     }
     
-    private void mostrar_lista_productos(ArrayList<  ArrayList<Producto >> colecciones_de_productos){
-        for (ArrayList<Producto> coleccion : colecciones_de_productos) {
-            //imprimir primero el nombre, id  y de los productos de la coleccion
-            
-            System.out.println(coleccion.get(0).nombre);
-            
-            System.out.println(coleccion.get(0).id);
-            
-            System.out.println(coleccion.get(0).categoria);
-            
-            
-            //falta cantidad total
-            for (Producto p : coleccion) {
-                
-                //imprimir la fecha de vencimiento de cada lote
-                System.out.println(p.fecha_vencimiento);        
-            }
+    
+    private void mostrar_lista_productos(ArrayList<Producto> productos){
+        if(productos.isEmpty()){
+            return; 
         }
         
-    
+        for (Producto p : productos) {
+            //imprimir primero el nombre, id  y de los productos de la coleccion
+            
+            
+            System.out.println("Nombre: "+p.nombre +" Id: "+ p.id+" Categoria: "+p.categoria+" Total:"+p.cantidad_total);
+            
+            for ( Entrega e : p.entregras) {
+                //imprimir la fecha de vencimiento de cada coleccion
+                
+                System.out.println("Numero de entrega : "+e.numero +" Cantidad : "+ e.cantidad_por_entrega+" Fecha de ingreso: "+e.ingreso);
+            
+                if(e.vencimiento == null){
+                    System.out.println("\n");        
+                }
+                else{
+                    System.out.println("Fecha de vencimiento: "+e.vencimiento+"\n");        
+                } 
+            }
+        }
     }
     
     @Override
-    public void menu(ArrayList<  ArrayList<Producto > >  colecciones_de_productos){
+    public void menu(ArrayList<Producto >  productos){
         System.out.println("Bienvenido "+nombre+":) !");
         int opcion;
         
@@ -58,24 +64,14 @@ public class EncargadoAlmacen extends Usuario{
                 }
 
                 case 1->{
+                    mostrar_lista_productos(productos);
+                    
                     //verificar si existe
-                    
-                    
-                    
                 }
                 case 2->{                
                     //hacer funcion buscar para poder editarlo
                 }
-                
-                
-                
-                
             }
         }while(opcion!=0);
-    
-    
-    
     }
-    
-    
 }

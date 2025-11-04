@@ -8,7 +8,6 @@ public class Proyecto_david_octubre {
     public static void main(String[] args) {
         int opcion;
         Base_de_datos bd = new Base_de_datos();
-        bd.Base_de_datos();
         
         Scanner scan = new Scanner(System.in);
         

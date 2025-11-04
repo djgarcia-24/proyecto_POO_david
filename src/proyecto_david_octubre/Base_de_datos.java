@@ -1,22 +1,46 @@
 
 package proyecto_david_octubre;
-import java.util.Scanner;
 
+
+import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 
 public class Base_de_datos {
+    
+    //registro de cada tipo de trabajador
     ArrayList<Vendedor> vendedores;
     ArrayList<EncargadoAlmacen> encargados_de_almacen;
-    ArrayList<  ArrayList<Producto > >    Colecciones_de_productos;
+    ArrayList< Producto > productos;
 
     Scanner scan = new Scanner(System.in);
     
-    public void Base_de_datos(){
+    public  Base_de_datos(){
+        productos = new ArrayList<>();
         vendedores = new ArrayList<>();
-        
         encargados_de_almacen = new ArrayList<>();
     
+        //productos precargados
+        Producto manguera = new Producto(); 
+        Producto abono = new Producto();
+        Producto cerco = new Producto();
+        
+         
+        manguera.leer_producto("manguera", "000000", "herramienta", "Marca manguera");
+        manguera.leer_entrega_producto( 30, LocalDate.now() ,null );
+        
+        
+        abono.leer_producto("abono", "000001", "agricultura",  "Marca abono" );
+        abono.leer_entrega_producto( 30, LocalDate.now(), null);
+ 
+        cerco.leer_producto("cerco", "000002", "ganaderia", "Marca cerco" );
+        cerco.leer_entrega_producto( 30,LocalDate.now(),null );
+ 
+        
+        productos.add(manguera);
+        productos.add(cerco);
+        productos.add(abono);
     };
 
     
@@ -42,7 +66,7 @@ public class Base_de_datos {
                     Vendedor nuevo_vendedor = new Vendedor();
                     nuevo_vendedor.leer_datos();
                     vendedores.add(nuevo_vendedor);
-                    nuevo_vendedor.menu(Colecciones_de_productos);
+                    nuevo_vendedor.menu(productos);
                     
                     opcion = 0;
                 }
@@ -50,7 +74,9 @@ public class Base_de_datos {
                     EncargadoAlmacen nuevo_encargado_almacen = new EncargadoAlmacen();
                     nuevo_encargado_almacen.leer_datos();
                     encargados_de_almacen.add(nuevo_encargado_almacen);
-                    nuevo_encargado_almacen.menu(Colecciones_de_productos);
+                    nuevo_encargado_almacen.menu(productos);
+                    opcion = 0;
+
                 }
                 case 3->{
                 }
@@ -104,7 +130,7 @@ public class Base_de_datos {
                     }
                     else{
                         System.out.println("Credenciales aceptadas!");
-                        vendedor_encontrado.menu(Colecciones_de_productos);
+                        vendedor_encontrado.menu(productos);
                         return;
                     }
                     return;
