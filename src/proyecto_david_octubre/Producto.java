@@ -1,13 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+
+
 package proyecto_david_octubre;
 
-/**
- *
- * @author davig
- */
+import java.util.ArrayList;
+
 public class Producto {
+    public String nombre; 
+    public int id;
+    public String categoria;
+    public int cantidad;
+    
+    public int fecha_vencimiento;
+    public int ingreso;
+    private ArrayList<String> proveedores;
+    
+    
+    
+    
     
 }

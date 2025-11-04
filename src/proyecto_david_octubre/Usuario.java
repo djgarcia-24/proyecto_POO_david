@@ -1,6 +1,7 @@
 
 package proyecto_david_octubre;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -11,7 +12,7 @@ public abstract class Usuario {
     String tipo;
     Scanner scan = new Scanner(System.in);
 
-    public abstract void menu();
+    public abstract void menu(ArrayList< ArrayList<Producto > >  colecciones_de_productos);
     
     
     public void leer_datos(){

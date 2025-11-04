@@ -7,14 +7,16 @@ import java.util.ArrayList;
 
 public class Base_de_datos {
     ArrayList<Vendedor> vendedores;
-    ArrayList<Producto> productos;
+    ArrayList<EncargadoAlmacen> encargados_de_almacen;
+    ArrayList<  ArrayList<Producto > >    Colecciones_de_productos;
 
-    
     Scanner scan = new Scanner(System.in);
-    
     
     public void Base_de_datos(){
         vendedores = new ArrayList<>();
+        
+        encargados_de_almacen = new ArrayList<>();
+    
     };
 
     
@@ -25,23 +27,30 @@ public class Base_de_datos {
 
           System.out.println("0) Salir"); 
           System.out.println("1) Crear como vendedor ");
-          System.out.println("2) Crear como null ");
+          System.out.println("2) Crear como Encargado Almacen ");
           System.out.println("3) Crear como null ");
           System.out.println("4) Crear como null ");
           
             opcion = Validaciones.validar_int("Indica un numero positivo del 0 al 4: ", 4, 0);
         
             switch (opcion) {
-                case 0 ->{}
+                case 0 ->{
+                    System.out.println("saliendo...");
+
+                }
                 case 1->{
                     Vendedor nuevo_vendedor = new Vendedor();
                     nuevo_vendedor.leer_datos();
                     vendedores.add(nuevo_vendedor);
-                    nuevo_vendedor.menu();
+                    nuevo_vendedor.menu(Colecciones_de_productos);
                     
                     opcion = 0;
                 }
                 case 2->{
+                    EncargadoAlmacen nuevo_encargado_almacen = new EncargadoAlmacen();
+                    nuevo_encargado_almacen.leer_datos();
+                    encargados_de_almacen.add(nuevo_encargado_almacen);
+                    nuevo_encargado_almacen.menu(Colecciones_de_productos);
                 }
                 case 3->{
                 }
@@ -95,7 +104,7 @@ public class Base_de_datos {
                     }
                     else{
                         System.out.println("Credenciales aceptadas!");
-                        vendedor_encontrado.menu();
+                        vendedor_encontrado.menu(Colecciones_de_productos);
                         return;
                     }
                     return;

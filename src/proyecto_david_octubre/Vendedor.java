@@ -1,6 +1,8 @@
 
 package proyecto_david_octubre;
 
+import java.util.ArrayList;
+
 
 public class Vendedor extends Usuario{
     @Override
@@ -14,9 +16,44 @@ public class Vendedor extends Usuario{
         super.leer_datos();
         super.mostrar_datos();
     }
+    
+    
     @Override
-    public void menu(){
+    public void menu(ArrayList<  ArrayList<Producto > >  colecciones_de_productos){
         System.out.println("Bienvenido "+nombre+":) !");
-        System.out.println("\nMenu de vendedor :");
+        int opcion;
+        
+        do{
+          System.out.println("\nMenu de vendedor: ");
+           
+          System.out.println("0) Salir ");
+          System.out.println("1) Buscar producto");
+          System.out.println("2) Registrar venta");
+          
+          
+            opcion = Validaciones.validar_int("Indica un numero positivo del 0 al 2: ", 2, 0);
+            
+            switch (opcion) {
+                case 0->{                    
+                    System.out.println("saliendo...");
+                }
+
+                case 1->{
+                }
+                case 2->{                    
+                }
+                
+                
+                
+                
+            }
+        }while(opcion!=0);
+    
+    
+    
     }
+    
+    
+    
+    
 }

@@ -21,7 +21,9 @@ public class Proyecto_david_octubre {
             opcion = Validaciones.validar_int("Indica un numero positivo del 0 al 2: ", 2, 0);
         
             switch (opcion) {
-                case 0->{}
+                case 0->{
+                    System.out.println("saliendo...");
+                }
 
                 case 1->{
                     bd.crear_cuenta();
@@ -33,7 +35,4 @@ public class Proyecto_david_octubre {
             }
         }while(opcion!=0);
     }
-    
-    
-    
 }
