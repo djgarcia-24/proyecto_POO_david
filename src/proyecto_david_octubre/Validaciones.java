@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Validaciones {
     static Scanner scan = new Scanner(System.in);
 
-    
+    //a
     static public int validar_int(String mensaje, int max,int min){
        int valor = 0 ;
        
