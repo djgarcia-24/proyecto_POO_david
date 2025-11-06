@@ -11,6 +11,8 @@ public abstract class Usuario {
     String nombre;
     String tipo;
     Scanner scan = new Scanner(System.in);
+    
+    
 
     public abstract void menu(ArrayList<Producto >  productos);
     

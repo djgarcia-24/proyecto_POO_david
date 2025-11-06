@@ -1,6 +1,8 @@
 
 package proyecto_david_octubre;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -45,5 +47,42 @@ public class Validaciones {
             }
        }  while(continuar);
         return cadena;
+    }
+    
+    
+    static public LocalDate validarFecha( String mensaje, String regex){
+        scan.nextLine();
+
+        
+        LocalDate fecha= LocalDate.of(1, 1, 1);
+        String cadena;
+        
+        boolean continuar = true;
+        
+            do {
+                try {
+                    System.out.print(mensaje);
+                    cadena = scan.nextLine();
+                
+                    if (cadena.matches(regex)) {
+                        continuar = false;
+                        fecha = LocalDate.parse(cadena);
+                    } 
+                else {
+                    System.out.println("No valido.");
+                }
+            } catch (InputMismatchException error) {
+                System.out.println("Debes indicar solo numeros.");
+                scan.nextLine();
+                continuar = false;
+            } catch(DateTimeParseException e){
+                System.out.println("Debes una poner fecha valida.");
+                scan.nextLine();
+                continuar = false;
+            }
+        } while(continuar);
+            
+            
+        return fecha;
     }
 }

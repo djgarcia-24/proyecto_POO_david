@@ -12,9 +12,20 @@ public class Base_de_datos {
     //registro de cada tipo de trabajador
     ArrayList<Vendedor> vendedores;
     ArrayList<EncargadoAlmacen> encargados_de_almacen;
-    ArrayList< Producto > productos;
+    static ArrayList< Producto > productos;
 
     Scanner scan = new Scanner(System.in);
+    
+    static public Producto buscar(String id_producto){
+        for(Producto p: productos){
+            if(id_producto.equals(p.id)){
+                return p;
+            }
+        }
+        return null;
+    } 
+    
+    
     
     public  Base_de_datos(){
         productos = new ArrayList<>();
@@ -99,9 +110,8 @@ public class Base_de_datos {
     public void iniciar_sesion(){
         int opcion;
         
-        if( vendedores.isEmpty() ){
+        if( vendedores.isEmpty() || encargados_de_almacen.isEmpty() ){
             System.out.println("\nNo existe ninguna cuenta en el sistema");
-            
             return;
         }
     
@@ -120,10 +130,8 @@ public class Base_de_datos {
             
             opcion= Validaciones.validar_int("Indica un numero positivo del 0 al 4: ", 4, 0);
             
-            
             switch (opcion) {
                 case 1->{
-                    
                     Vendedor vendedor_encontrado = buscar(vendedores, nombre, id);
                     if( vendedor_encontrado== null){
                         System.out.println("Credenciales no validas, intente de nuevo");
@@ -137,6 +145,18 @@ public class Base_de_datos {
                     
                 }
                 case 2->{
+                    EncargadoAlmacen encargado_a_encontrado = buscar(encargados_de_almacen, nombre, id);
+                    if( encargado_a_encontrado== null){
+                        System.out.println("Credenciales no validas, intente de nuevo");
+                    }
+                    else{
+                        System.out.println("Credenciales aceptadas!");
+                        encargado_a_encontrado.menu(productos);
+                        return;
+                    }
+                    return;
+                
+                
                 }
                 case 3->{
                 }

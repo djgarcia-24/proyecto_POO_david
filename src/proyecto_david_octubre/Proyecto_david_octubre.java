@@ -3,7 +3,7 @@ package proyecto_david_octubre;
 
 import java.util.Scanner;
 
-public class Proyecto_david_octubre {
+/*public class Proyecto_david_octubre {
 
     public static void main(String[] args) {
         int opcion;
@@ -35,3 +35,4 @@ public class Proyecto_david_octubre {
         }while(opcion!=0);
     }
 }
+*/
