@@ -76,5 +76,17 @@ public class Producto {
         cantidad_total = cantidad_total -cantidad_vendida;
     }
 
-
+    
+    public void editar_nombre(String nombre){
+         System.out.println("\nIndique nuevo nombre: ");
+        
+        this.nombre = nombre;
+    }
+    
+    public void editar_categoria(String categoria){
+        
+        System.out.println("\nIndique nueva categoria: ");
+        
+        this.categoria= categoria;
+    }
 }

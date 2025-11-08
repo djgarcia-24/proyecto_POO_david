@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class Validaciones {
     static Scanner scan = new Scanner(System.in);
 
-    //a
     static public int validar_int(String mensaje, int max,int min){
            
        int valor = 0 ;
@@ -90,21 +89,10 @@ public class Validaciones {
         return fecha;
     }
     
-    static public boolean validar_venta(Producto p, int cantidad){
-        
-        for(Entrega e: p.entregas){
-            // si la fecha de vencimiento de alguna entrega es despues de hoy Y la cantidad no supera la cantidad total de productos, se vendera
-            if(    e.vencimiento.isAfter( LocalDate.now() )  &&     p.cantidad_total>= cantidad    ){
-                return true;
-            }
-        }
-        return false;
-    }
-
     static public boolean  verificar_cuenta_existente(String nombre,  String id, ArrayList<? extends Usuario> lista_usuarios){
         // de crear una cuenta con nombre e id ya existentes, no se creara la cuenta
         for(Usuario u: lista_usuarios){
-            if(  u.nombre.equals(nombre) &&  u.id.equals(id) ){
+            if(  u.nombre.equals(nombre) &&  u.id.equals(id) || nombre.isBlank()|| nombre.isEmpty() || id.isBlank() || id.isEmpty()){
                 System.out.print("Cuenta ya existe!");
                 
                 return true;
@@ -113,5 +101,59 @@ public class Validaciones {
         
         
         return false;
+    }
+
+    static public boolean validar_producto(String nombre, String id){
+        for(Producto p: Base_de_datos.productos){
+            if(nombre.equals(p.nombre) || id.equals(p.id)){
+                System.out.println("\nNo puedes tener dos productos con mismo nombre y/o id!");
+                System.out.println("\n Producto "+p.nombre+" y "+p.id+" ya existe");
+                return true; 
+            }
+        }
+        
+        if(nombre.isEmpty() || nombre.isBlank() || id.isEmpty() || id.isBlank()){
+            System.out.println("\nNo puedes tener datos vacios!");
+            return true;
+        }
+        
+   
+        return false;
+    }
+    
+    
+    static public boolean validar_vencimiento(){
+        System.out.println("El producto tiene fecha de vencimiento?:");
+        
+        int respuesta = validar_int("1) si \n0) no", 1, 0 );
+        
+        if(respuesta == 0){
+            return false;
+        }
+        else if (respuesta == 1){
+            return true;
+        }
+        
+        return false;
+    } 
+    
+    static public boolean producto_vencido(Producto p){
+        
+        for(Entrega e: p.entregas){
+        
+            // si existe todavia alguna entrega con vencimietno despues de hoy, retornar false
+            if(  e.vencimiento.isAfter( LocalDate.now() )){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    static public boolean validar_venta(Producto p, int cantidad){
+        if(    producto_vencido(p)  ||     p.cantidad_total<cantidad    ){
+            return false;
+        }
+        
+        return true;
     }
 }

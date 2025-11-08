@@ -20,21 +20,6 @@ public class EncargadoAlmacen extends Usuario{
     
     
     
-    private void editar_nombre(Producto producto){
-         System.out.println("\nIndique nuevo nombre: ");
-        
-        producto.nombre =    scan.nextLine();
-    }
-    
-    private void editar_categoria(Producto producto){
-        
-         System.out.println("\nIndique nueva categoria: ");
-        
-        producto.categoria =  scan.nextLine();
-    }
-    
-    
-    
     
     @Override
     public void menu(ArrayList<Producto >  productos){
@@ -57,27 +42,40 @@ public class EncargadoAlmacen extends Usuario{
                 }
 
                 case 1->{
+                    String nombre;
+                    String id;
+                    String categoria;
+                    String proveedor;
+                    do{
+                        System.out.println("Indique nombre del producto: ");
+                        nombre = scan.nextLine();
+                        System.out.println("Indique id del producto: ");
+                        id = scan.nextLine();
+                    }while(   Validaciones.validar_producto(nombre, id) );
                     
-                    Producto nuevo_producto = new Producto();
-                    
-                    
-                    System.out.println("Indique nombre del producto: ");
-                    String nombre = scan.nextLine();
-                    System.out.println("Indique id del producto: ");
-                    String id = scan.nextLine();
                     System.out.println("Indique categoria del producto: ");
-                    String categoria = scan.nextLine();
+                    categoria = scan.nextLine();
                     System.out.println("Indique proveedor del producto: ");
-                    String proveedor = scan.nextLine();
+                    proveedor = scan.nextLine();
+                    Producto nuevo_producto = new Producto();
                     
                     nuevo_producto.leer_producto(nombre, id, categoria, proveedor);
                 
-                    
                     System.out.println("Indique cantidad del producto: ");
-                    int cantidad_de_entrega = scan.nextInt();
+                    int cantidad_de_entrega = Validaciones.validar_int("Debe ser un numero valido mayor a 1 y menor a 10.000 ", 100000 ,1);
+                    
+                    
+                    
+                    
                     
                     LocalDate ingreso= Validaciones.validarFecha("Indicar fecha de ingreso formato aaaa-mm-dd: ", "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
-                    LocalDate vencimiento = Validaciones.validarFecha("Indicar fecha de vencimiento formato aaaa-mm-dd: ", "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
+                    LocalDate vencimiento;
+                    if(Validaciones.validar_vencimiento()){
+                        vencimiento = Validaciones.validarFecha("Indicar fecha de vencimiento formato aaaa-mm-dd: ", "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
+                    }
+                    else{
+                        vencimiento = null;
+                    }
                     
                     nuevo_producto.leer_entrega_producto(cantidad_de_entrega, ingreso, vencimiento);
                     
@@ -85,37 +83,36 @@ public class EncargadoAlmacen extends Usuario{
                     Base_de_datos.mostrar_lista_productos(productos);
                 }
                 case 2->{ 
+                    
                     Base_de_datos.mostrar_lista_productos(productos);
                     System.out.println("Indique id del producto a editar: ");
                     Producto producto_a_editar = Base_de_datos.buscar_producto(scan.nextLine() );
                     System.out.println("Producto a editar: \n"+"Nombre: "+producto_a_editar.nombre+" Categoria: "+producto_a_editar.categoria);
                     
-                    editar_nombre(producto_a_editar);
-                    editar_categoria(producto_a_editar);
-                    //funcion editar, no habra menu pq se trabajara en gui
-                    //tendra la opcion de editar categoria y/o nombre
-                
+                    
+                    String nombre;
+                    String categoria;
+                    do{
+                        System.out.println("Indique nombre nuevo del producto: ");
+                        nombre = scan.nextLine();
+                        System.out.println("Indique categoria nueva del producto: ");
+                        categoria = scan.nextLine();
+                    }while(   Validaciones.validar_producto(nombre,"id") );
+                    
+                    producto_a_editar.editar_nombre(nombre);
+                    producto_a_editar.editar_categoria(categoria);
                     Base_de_datos.mostrar_lista_productos(productos);
                     
                 }
                 case 3->{
                     Base_de_datos.mostrar_lista_productos(productos);
                     System.out.println("Indique id del producto: ");
-                    
                     Producto producto_a_editar = Base_de_datos.buscar_producto( scan.nextLine() );
-                    
                     System.out.println("Producto: \n"+"Nombre: "+producto_a_editar.nombre+"Categoria: "+producto_a_editar.categoria);
-                    
                     LocalDate fecha_entrega =  Validaciones.validarFecha("Indicar fecha de entrega formato aaaa-mm-dd: ", "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
-                    
                     LocalDate fecha_vencimiento =  Validaciones.validarFecha("Indicar fecha de vencimiento formato aaaa-mm-dd: ", "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
-                    
-                    int numero =  Validaciones.validar_int("Indicar numero de existencias", 1000, 1);
-                     
-                    
+                    int numero =  Validaciones.validar_int("Indicar numero de existencias, debe ser un numero mayor a 0 y menor que 10.000", 10000, 1);
                     producto_a_editar.leer_entrega_producto(numero, fecha_entrega, fecha_vencimiento);
-                    
-                    
                     Base_de_datos.mostrar_lista_productos(productos);
                     
                 }

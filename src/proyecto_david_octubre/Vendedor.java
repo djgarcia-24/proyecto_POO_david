@@ -71,18 +71,18 @@ public class Vendedor extends Usuario{
                     
                     Producto producto_a_vender = Base_de_datos.buscar_producto(busqueda);
                     
+                    if(producto_a_vender == null){
+                        System.out.println("Error, no se encontro articulo");
+                        continue;
+                    }
                     
-                    System.out.println("Indique cantidadr:");
+                    System.out.println("Indique cantidad:");
 
                     int cantidad = scan.nextInt();
-                    
                     
                     if (Validaciones.validar_venta(producto_a_vender, cantidad) ){
                         producto_a_vender.venta(cantidad);
                         System.out.println("venta aceptada");
-
-                        
-                        
                     }else{
                         System.out.println("venta rechazada");
                     }
