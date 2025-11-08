@@ -19,32 +19,20 @@ public class EncargadoAlmacen extends Usuario{
     }
     
     
-    private void mostrar_lista_productos(ArrayList<Producto> productos){
-        if(productos.isEmpty()){
-            return; 
-        }
-        System.out.println("\n Lista completa de productos: ");
-        for (Producto p : productos) {
-            //imprimir primero el nombre, id  y de los productos de la coleccion
-            
-            
-
-            System.out.println("Nombre: "+p.nombre +" Id: "+ p.id+" Categoria: "+p.categoria+" Total:"+p.cantidad_total);
-            
-            for ( Entrega e : p.entregras) {
-                //imprimir la fecha de vencimiento de cada coleccion
-                
-                System.out.println("Numero de entrega : "+e.numero +" Cantidad : "+ e.cantidad_por_entrega+" Fecha de ingreso: "+e.ingreso);
-            
-                if(e.vencimiento == null){
-                    System.out.println("\n");        
-                }
-                else{
-                    System.out.println("Fecha de vencimiento: "+e.vencimiento+"\n");        
-                } 
-            }
-        }
+    
+    private void editar_nombre(Producto producto){
+         System.out.println("\nIndique nuevo nombre: ");
+        
+        producto.nombre =    scan.nextLine();
     }
+    
+    private void editar_categoria(Producto producto){
+        
+         System.out.println("\nIndique nueva categoria: ");
+        
+        producto.categoria =  scan.nextLine();
+    }
+    
     
     
     
@@ -94,23 +82,42 @@ public class EncargadoAlmacen extends Usuario{
                     nuevo_producto.leer_entrega_producto(cantidad_de_entrega, ingreso, vencimiento);
                     
                     productos.add(nuevo_producto);
-                    mostrar_lista_productos(productos);
+                    Base_de_datos.mostrar_lista_productos(productos);
                 }
                 case 2->{ 
-                    mostrar_lista_productos(productos);
+                    Base_de_datos.mostrar_lista_productos(productos);
                     System.out.println("Indique id del producto a editar: ");
-                    Producto producto_a_editar = Base_de_datos.buscar( scan.nextLine() );
+                    Producto producto_a_editar = Base_de_datos.buscar_producto(scan.nextLine() );
+                    System.out.println("Producto a editar: \n"+"Nombre: "+producto_a_editar.nombre+" Categoria: "+producto_a_editar.categoria);
                     
-                    System.out.println("Producto a editar: "+producto_a_editar.nombre+producto_a_editar.categoria);
+                    editar_nombre(producto_a_editar);
+                    editar_categoria(producto_a_editar);
+                    //funcion editar, no habra menu pq se trabajara en gui
+                    //tendra la opcion de editar categoria y/o nombre
+                
+                    Base_de_datos.mostrar_lista_productos(productos);
                     
-                    
-                    
-                    
-
-                    //hacer funcion buscar para poder editarlo
                 }
                 case 3->{
-                
+                    Base_de_datos.mostrar_lista_productos(productos);
+                    System.out.println("Indique id del producto: ");
+                    
+                    Producto producto_a_editar = Base_de_datos.buscar_producto( scan.nextLine() );
+                    
+                    System.out.println("Producto: \n"+"Nombre: "+producto_a_editar.nombre+"Categoria: "+producto_a_editar.categoria);
+                    
+                    LocalDate fecha_entrega =  Validaciones.validarFecha("Indicar fecha de entrega formato aaaa-mm-dd: ", "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
+                    
+                    LocalDate fecha_vencimiento =  Validaciones.validarFecha("Indicar fecha de vencimiento formato aaaa-mm-dd: ", "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
+                    
+                    int numero =  Validaciones.validar_int("Indicar numero de existencias", 1000, 1);
+                     
+                    
+                    producto_a_editar.leer_entrega_producto(numero, fecha_entrega, fecha_vencimiento);
+                    
+                    
+                    Base_de_datos.mostrar_lista_productos(productos);
+                    
                 }
             }
         }while(opcion!=0);

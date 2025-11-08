@@ -11,10 +11,12 @@ public class Validaciones {
 
     //a
     static public int validar_int(String mensaje, int max,int min){
+           
        int valor = 0 ;
        
        boolean repetir = true;
        do {
+           
             try {
                 System.out.println(mensaje);
                 valor = scan.nextInt();
@@ -84,5 +86,16 @@ public class Validaciones {
             
             
         return fecha;
+    }
+    
+    static public boolean validar_venta(Producto p, int cantidad){
+        
+        for(Entrega e: p.entregas){
+            // si la fecha de vencimiento de alguna entrega es despues de hoy Y la cantidad no supera la cantidad total de productos, se vendera
+            if(    e.vencimiento.isAfter( LocalDate.now() )  &&     p.cantidad_total>= cantidad    ){
+                return true;
+            }
+        }
+        return false;
     }
 }

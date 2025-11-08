@@ -8,6 +8,14 @@ public class Entrega {
     public LocalDate ingreso;
     public LocalDate vencimiento;
     
+    public Entrega(){
+        numero =0;
+        cantidad_por_entrega =0;
+        ingreso =  LocalDate.now();
+        vencimiento = null;
+    
+    }
+    
     
     public void leer_datos(int numero, int cantidad_entrega, LocalDate ingreso, LocalDate vencimiento){
         this.numero = numero;

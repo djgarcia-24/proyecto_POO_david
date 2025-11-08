@@ -3,14 +3,11 @@ package proyecto_david_octubre;
 
 import java.util.Scanner;
 
-/*public class Proyecto_david_octubre {
+public class Proyecto_david_octubre {
 
     public static void main(String[] args) {
         int opcion;
         Base_de_datos bd = new Base_de_datos();
-        
-        Scanner scan = new Scanner(System.in);
-        
         do{
           System.out.println("\nMenu Principal: ");
           System.out.println("0) Salir"); 
@@ -35,4 +32,3 @@ import java.util.Scanner;
         }while(opcion!=0);
     }
 }
-*/
