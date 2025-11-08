@@ -11,9 +11,9 @@ public class Vendedor extends Usuario{
     }
     
     @Override
-    public void leer_datos(){
+    public void leer_datos(String nombre, String id){
         tipo = "vendedor";
-        super.leer_datos();
+        super.leer_datos(nombre, id);
         super.mostrar_datos();
     }
     

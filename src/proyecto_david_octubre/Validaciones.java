@@ -1,8 +1,10 @@
 
+
 package proyecto_david_octubre;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -96,6 +98,20 @@ public class Validaciones {
                 return true;
             }
         }
+        return false;
+    }
+
+    static public boolean  verificar_cuenta_existente(String nombre,  String id, ArrayList<? extends Usuario> lista_usuarios){
+        // de crear una cuenta con nombre e id ya existentes, no se creara la cuenta
+        for(Usuario u: lista_usuarios){
+            if(  u.nombre.equals(nombre) &&  u.id.equals(id) ){
+                System.out.print("Cuenta ya existe!");
+                
+                return true;
+            }
+        }
+        
+        
         return false;
     }
 }

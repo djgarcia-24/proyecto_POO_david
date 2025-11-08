@@ -17,11 +17,9 @@ public abstract class Usuario {
     public abstract void menu(ArrayList<Producto >  productos);
     
     
-    public void leer_datos(){
-        System.out.println("\nIntroduzca nombre: ");
-        nombre = scan.nextLine();
-        System.out.println("Introduzca una contraseña: ");
-        id = scan.nextLine();
+    public void leer_datos(String nombre, String id){
+        this.nombre = nombre;
+        this.id = id;
     }
     
     public void mostrar_datos(){   

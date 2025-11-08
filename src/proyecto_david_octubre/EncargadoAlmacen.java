@@ -12,9 +12,9 @@ public class EncargadoAlmacen extends Usuario{
     }
     
     @Override
-    public void leer_datos(){
+    public void leer_datos(String nombre , String id){
         tipo = "encargado almacen";
-        super.leer_datos();
+        super.leer_datos(nombre, id );
         super.mostrar_datos();
     }
     

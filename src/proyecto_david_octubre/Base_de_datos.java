@@ -10,8 +10,8 @@ import java.time.LocalDate;
 public class Base_de_datos {
     
     //registro de cada tipo de trabajador
-    ArrayList<Vendedor> vendedores;
-    ArrayList<EncargadoAlmacen> encargados_de_almacen;
+    static ArrayList<Vendedor> vendedores;
+    static ArrayList<EncargadoAlmacen> encargados_de_almacen;
     
     static ArrayList< Producto > productos;
     ArrayList<String> ventas;
@@ -96,7 +96,22 @@ public class Base_de_datos {
         mostrar_lista_productos(productos_encontrados);
     } 
             
-            
+    private Usuario buscar_empleado(ArrayList<? extends Usuario> lista_vendedores, ArrayList<? extends Usuario> lista_encargados_a, String nombre, String id){
+        for (Usuario u : lista_vendedores) {
+            if (u.nombre.equals(nombre) && u.id.equals(id)){
+                return u;
+            }
+        }
+        
+        for (Usuario  u: lista_encargados_a) {
+            if (u.nombre.equals(nombre) && u.id.equals(id)){
+                return u;
+            }
+        }
+        
+        return null;
+    }
+    
     public void crear_cuenta(){
         int opcion;
         do{
@@ -109,27 +124,40 @@ public class Base_de_datos {
           System.out.println("4) Crear como null ");
           
             opcion = Validaciones.validar_int("Indica un numero positivo del 0 al 4: ", 4, 0);
-        
+            String nombre;
+            String id;
             switch (opcion) {
                 case 0 ->{
                     System.out.println("saliendo...");
 
                 }
                 case 1->{
+                   // si no existe el usuario, se crea la cuenta, de lo contrario, mostrar un error
+                    do{
+                        System.out.print("Introduzca el nombre que tendra su cuenta, no debe tener mismo nombre ni id que otra cuenta: ");
+                        nombre = scan.nextLine();
+                        System.out.print("Introduzca el ID que tendra su cuenta: ");
+                        id = scan.nextLine();
+                    }while(Validaciones.verificar_cuenta_existente(nombre, id, vendedores) );
                     Vendedor nuevo_vendedor = new Vendedor();
-                    nuevo_vendedor.leer_datos();
+                    nuevo_vendedor.leer_datos(nombre, id );
                     vendedores.add(nuevo_vendedor);
                     nuevo_vendedor.menu(productos);
                     
                     opcion = 0;
                 }
                 case 2->{
-                    EncargadoAlmacen nuevo_encargado_almacen = new EncargadoAlmacen();
-                    nuevo_encargado_almacen.leer_datos();
-                    encargados_de_almacen.add(nuevo_encargado_almacen);
-                    nuevo_encargado_almacen.menu(productos);
+                    do{
+                        System.out.print("Introduzca el nombre que tendra su cuenta, no debe tener mismo nombre ni id que otra cuenta: ");
+                        nombre = scan.nextLine();
+                        System.out.print("Introduzca el ID que tendra su cuenta: ");
+                        id = scan.nextLine();
+                    }while(Validaciones.verificar_cuenta_existente(nombre, id , encargados_de_almacen));
+                    EncargadoAlmacen nuevo_encargado_a = new EncargadoAlmacen();
+                    nuevo_encargado_a.leer_datos(nombre, id );
+                    encargados_de_almacen.add(nuevo_encargado_a);
+                    nuevo_encargado_a.menu(productos);
                     opcion = 0;
-
                 }
                 case 3->{
                 }
@@ -139,72 +167,31 @@ public class Base_de_datos {
             }
         }while(opcion!=0);
     }
-    
-    private <Rol_generico extends Usuario> Rol_generico buscar_empleado(ArrayList<Rol_generico> lista, String nombre, String id){
-        for (Rol_generico r : lista) {
-            if (r.nombre.equals(nombre) && r.id.equals(id)){
-                return r;
-            }
-        }
-        return null;
-    }
+    //añadir parametro de lista, por cada tipo de usuario
+ 
     
     public void iniciar_sesion(){
-        int opcion;
+        boolean seguir = true;
         
-        if( vendedores.isEmpty() || encargados_de_almacen.isEmpty() ){
+        if( vendedores.isEmpty() && encargados_de_almacen.isEmpty() ){
             System.out.println("\nNo existe ninguna cuenta en el sistema");
             return;
         }
-    
+   
         do{
             System.out.println("\nIntroducir nombre de la cuenta: ");
             String nombre =  scan.nextLine();
             System.out.println("Introducir contraseña de la cuenta: ");
             String id =  scan.nextLine();
             
-            System.out.println("Seleccionar tipo de cuenta a acceder: ");
-            System.out.println("0) volver ");
-            System.out.println("1) Vendedor ");
-            System.out.println("2) Encargado ");
-            System.out.println("3) null ");
-            System.out.println("4) null ");
+            Usuario cuenta_encontrada = buscar_empleado(vendedores, encargados_de_almacen, nombre, id);
             
-            opcion= Validaciones.validar_int("Indica un numero positivo del 0 al 4: ", 4, 0);
-            
-            switch (opcion) {
-                case 1->{
-                    Vendedor vendedor_encontrado = buscar_empleado(vendedores, nombre, id);
-                    if( vendedor_encontrado== null){
-                        System.out.println("Credenciales no validas, intente de nuevo");
-                    }
-                    else{
-                        System.out.println("Credenciales aceptadas!");
-                        vendedor_encontrado.menu(productos);
-                        return;
-                    }
-                    return;
-                    
-                }
-                case 2->{
-                    EncargadoAlmacen encargado_a_encontrado = buscar_empleado(encargados_de_almacen, nombre, id);
-                    if( encargado_a_encontrado== null){
-                        System.out.println("Credenciales no validas, intente de nuevo");
-                    }
-                    else{
-                        System.out.println("Credenciales aceptadas!");
-                        encargado_a_encontrado.menu(productos);
-                        return;
-                    }
-                    return;
-                
-                
-                }
-                case 3->{
-                }
-                case 4->{
-                }
+            if( cuenta_encontrada == null){
+                System.out.println("no encontrado");
+            }else{
+                cuenta_encontrada.menu(productos);
+                seguir = false;
             }
-        }while(opcion!=0);
+        }while(seguir);
     }
 }
