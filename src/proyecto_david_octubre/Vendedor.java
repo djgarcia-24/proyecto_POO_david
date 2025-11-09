@@ -1,6 +1,7 @@
 
 package proyecto_david_octubre;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -77,12 +78,21 @@ public class Vendedor extends Usuario{
                     }
                     
                     System.out.println("Indique cantidad:");
-
-                    int cantidad = scan.nextInt();
-                    
+                    int cantidad = Validaciones.validar_int("Debe ser un numero valido mayor a 1 y menor a 100.000", 100000 ,1);
+                    double monto = Validaciones.validar_monto("Introducir monto de la venta: ", 1);
+                            
                     if (Validaciones.validar_venta(producto_a_vender, cantidad) ){
                         producto_a_vender.venta(cantidad);
                         System.out.println("venta aceptada");
+                        
+                        
+                        Venta nueva_venta = new Venta();
+                        String id_de_venta= Integer.toString(Base_de_datos.ventas.size());
+                        nueva_venta.registrar_venta(id_de_venta, LocalDate.now(),monto , producto_a_vender, cantidad);
+                        Base_de_datos.ventas.add(nueva_venta);
+                        
+                        
+                        
                     }else{
                         System.out.println("venta rechazada");
                     }

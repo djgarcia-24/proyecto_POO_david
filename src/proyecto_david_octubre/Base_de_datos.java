@@ -14,7 +14,7 @@ public class Base_de_datos {
     static ArrayList<EncargadoAlmacen> encargados_de_almacen;
     
     static ArrayList< Producto > productos;
-    ArrayList<String> ventas;
+    static ArrayList<Venta> ventas;
     
     Scanner scan = new Scanner(System.in);
     

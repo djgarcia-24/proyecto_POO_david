@@ -156,4 +156,32 @@ public class Validaciones {
         
         return true;
     }
+
+    static public double validar_monto( String mensaje, int min){
+       double valor = 0 ;
+       
+       boolean repetir = true;
+       do {
+           try {
+                System.out.println(mensaje);
+                valor = scan.nextDouble();
+                if (valor < min) {
+                    System.out.println("No valido.");
+                } else {
+                    repetir = false;
+                }
+            } catch (InputMismatchException error) {
+                System.out.println("Error: Debes indicar un numero.");
+                scan.nextLine();
+            }
+        } while(repetir);
+
+      return valor;
+    }
+        
+    
+    
+    
+
+
 }
